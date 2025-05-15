@@ -5,8 +5,12 @@ import base64
 import io
 from jinja2 import Template
 
-# Set wide layout
-# st.set_page_config(page_title="Email Signature Generator", layout="wide")
+def load_instructions():
+    try:
+        with open("INSTRUCTIONS.txt", "r", encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        return "❗INSTRUCTIONS.txt not found."
 
 # Load selected template
 def load_template(option):
@@ -31,6 +35,10 @@ def format_tel(number):
 
 # Title
 st.title("📧 Email Signature Generator")
+
+# Show Instructions
+with st.expander("📘 How to Use This Tool (Instructions)", expanded=False):
+    st.markdown(load_instructions())
 
 # Step 1: Upload photo first
 if "image_uploaded" not in st.session_state:
