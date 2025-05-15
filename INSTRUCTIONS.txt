@@ -1,30 +1,59 @@
-💼 EMAIL SIGNATURE GENERATOR – USER GUIDE
+### 📘 INSTRUCTIONS.txt
 
-This tool helps you create professional HTML email signatures for Welsford, Valveman, or Both.
+**Welcome to the Valveman & Welsford Co. Email Signature Generator**
 
-🖱️ HOW TO USE:
+This tool allows you to generate a professional email signature in just a few steps. No coding required.
 
-1. Double-click on `run.bat`
-   → The app will open in your browser.
+---
 
-2. Fill in:
-   • First Name
-   • Last Name
-   • Job Title
-   • Personal Phone Number (optional)
-   • Office Phone Number (optional)
-   • Choose websites to display
-   • Upload and crop your photo
+#### ✅ How to Use:
 
-3. Click “Generate Signature”
-   → Preview your signature below.
+1. **Upload Profile Photo**
 
-4. Click “📥 Download Signature HTML” to save.
+   * Click the "Upload Profile Photo" button.
+   * You may crop or zoom the photo to center your face.
+   * Transparent images will be placed on a white background automatically.
 
-💡 NOTES:
-• One phone number? It centers itself automatically.
-• Transparent photos? A white background is applied.
-• Downloaded HTML is ready to paste into Gmail or any other email platform.
+2. **Fill in Signature Details**
 
-🛠 Need Help?
-If you encounter issues or have suggestions, contact Jan Aeron Abrahan.
+   * **Choose Signature Type**:
+     Select between:
+
+     * **Welsford** (Welsford branding only)
+     * **Valveman** (Valveman branding only)
+     * **Both** (Combined signature)
+   * **Enter Full Name & Job Title**.
+   * **Phone Numbers**:
+
+     * Personal and/or Office Number can be entered.
+     * The tool will format them automatically into clickable `tel:` links.
+   * **Website Visibility**:
+     You can choose to show both company websites, or just one.
+
+3. **Generate the Signature**
+
+   * Click “Generate Signature”.
+   * A live preview will appear.
+   * If everything looks good, click “📅 Download Signature HTML” to save your email signature.
+
+---
+
+#### 📝 Notes:
+
+* If only **one phone number** is provided, it will be centered neatly.
+* Signature output is in **HTML format**, which you can paste directly into Gmail, Outlook, or any email client that supports HTML.
+* Make sure to **crop your image properly** before generating the final output.
+
+---
+
+#### 🧰 Troubleshooting:
+
+* If the image does not appear circular: ensure you're cropping and zooming before generating.
+* If preview does not show: re-upload the image and try again.
+* Having issues with formatting? Use **Google Chrome** or **Microsoft Edge** for best results.
+
+---
+
+#### 🧑‍💼 Questions or Requests?
+
+For assistance or to report bugs, please contact Aeron at \[[aeron@valveman.com](mailto:aeron@valveman.com)].
