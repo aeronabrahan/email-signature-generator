@@ -1,5 +1,3 @@
-### 📘 INSTRUCTIONS.txt
-
 **Welcome to the Valveman & Welsford Co. Email Signature Generator**
 
 This tool allows you to generate a professional email signature in just a few steps. No coding required.
@@ -56,4 +54,4 @@ This tool allows you to generate a professional email signature in just a few st
 
 #### 🧑‍💼 Questions or Requests?
 
-For assistance or to report bugs, please contact Aeron at \[[aeron@valveman.com](mailto:aeron@valveman.com)].
+For assistance or to report bugs, please contact Jan Aeron Abrahan at \[[aeron@valveman.com](mailto:aeron@valveman.com)].
