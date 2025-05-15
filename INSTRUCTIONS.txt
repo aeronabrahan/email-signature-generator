@@ -1,0 +1,30 @@
+💼 EMAIL SIGNATURE GENERATOR – USER GUIDE
+
+This tool helps you create professional HTML email signatures for Welsford, Valveman, or Both.
+
+🖱️ HOW TO USE:
+
+1. Double-click on `run.bat`
+   → The app will open in your browser.
+
+2. Fill in:
+   • First Name
+   • Last Name
+   • Job Title
+   • Personal Phone Number (optional)
+   • Office Phone Number (optional)
+   • Choose websites to display
+   • Upload and crop your photo
+
+3. Click “Generate Signature”
+   → Preview your signature below.
+
+4. Click “📥 Download Signature HTML” to save.
+
+💡 NOTES:
+• One phone number? It centers itself automatically.
+• Transparent photos? A white background is applied.
+• Downloaded HTML is ready to paste into Gmail or any other email platform.
+
+🛠 Need Help?
+If you encounter issues or have suggestions, contact Jan Aeron Abrahan.

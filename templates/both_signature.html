@@ -1,0 +1,126 @@
+<!-- templates/both_signature.html -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <table style="font-family:Arial,Helvetica,sans-serif;width:715px;border-spacing:0;border-collapse:collapse;">
+    <tr>
+      <td><img src="https://sample.rankgaze.com/wp-content/uploads/hzjas.png" width="715" height="2" /></td>
+    </tr>
+    <tr>
+      <td>
+        <table>
+          <tr>
+            <!-- Profile Photo -->
+            <td width="110" style="padding-right:15px;">
+              <div style="
+                width: 112px;
+                height: 112px;
+                padding: 1px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #0076c9 0%, #8dc63f 50%, #f7941e 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              ">
+                <img src="{{ photo_url }}" width="110" height="110" style="border-radius: 50%; object-fit: cover;" />
+              </div>
+
+            </td>
+
+            <!-- Name, Title, Contact -->
+            <td width="370" style="padding-right: 15px;">
+              <p style="margin: 0 0 1px 0;">
+                <span style="font-family:Poppins,Arial,sans-serif;font-size:19px;line-height:21px;color:#000000;">
+                  <strong>{{ first_name }}</strong> {{ last_name }}
+                </span>
+              </p>
+              <p style="margin: 0 0 20px 0;">
+                <span style="font-size:12px;line-height:14px;color:#1b75bc;">{{ title }}</span>
+              </p>
+
+              <!-- Phone & Websites -->
+              <table border="0" cellpadding="0" cellspacing="0" style="font-size:1px;border-spacing:0;border-collapse:collapse;">
+                <tr>
+                  {% if show_personal and show_office %}
+                    <!-- Personal phone -->
+                    <td style="padding-right: 8px;"><img height="13" width="14" alt="phone" src="https://sample.rankgaze.com/wp-content/uploads/Phone-iconjas.png" /></td>
+                    <td style="padding-right: 25px;">
+                      <a href="tel:{{ phone_link }}" style="font-size:12px;color:#000000;text-decoration:none;">{{ phone_display }}</a>
+                    </td>
+                    <!-- Office phone -->
+                    <td style="padding-right: 8px;"><img height="13" width="14" alt="building" src="https://sample.rankgaze.com/wp-content/uploads/Building-icojasn.png" /></td>
+                    <td style="padding-right: 25px;">
+                      <a href="tel:{{ office_link }}" style="font-size:12px;color:#000000;text-decoration:none;">{{ office_display }}</a>
+                    </td>
+
+                  {% elif show_personal %}
+                    <!-- Centered Personal phone only -->
+                    <td colspan="4" style="text-align: center;">
+                      <img height="13" width="14" alt="phone" style="vertical-align: middle; margin-right: 4px;" src="https://sample.rankgaze.com/wp-content/uploads/Phone-iconjas.png" />
+                      <a href="tel:{{ phone_link }}" style="font-size:12px;color:#000000;text-decoration:none;">{{ phone_display }}</a>
+                    </td>
+
+                  {% elif show_office %}
+                    <!-- Centered Office phone only -->
+                    <td colspan="4" style="text-align: center;">
+                      <a href="tel:{{ office_link }}" style="font-size:12px;color:#000000;text-decoration:none;">{{ office_display }}</a>
+                    </td>
+                  {% endif %}
+                </tr>
+
+                <tr><td colspan="4" style="padding-bottom: 6px;"></td></tr>
+
+                <tr>
+                  {% if show_welsford %}
+                  <td style="padding-right: 8px;">
+                    <img height="14" width="14" alt="fswelsford" src="https://sample.rankgaze.com/wp-content/uploads/Globe-icon.png" />
+                  </td>
+                  <td style="padding-right: 25px;">
+                    <a href="https://www.fswelsford.com/" style="font-size:12px;color:#000000;text-decoration:none;">www.fswelsford.com</a>
+                  </td>
+                  {% endif %}
+
+                  {% if show_valveman %}
+                  <td style="padding-right: 8px;">
+                    <img height="14" width="14" alt="valveman" src="https://sample.rankgaze.com/wp-content/uploads/Globe-icon.png" />
+                  </td>
+                  <td style="padding-right: 25px;">
+                    <a href="https://valveman.com/" style="font-size:12px;color:#000000;text-decoration:none;">www.valveman.com</a>
+                  </td>
+                  {% endif %}
+                </tr>
+              </table>
+
+              <p style="margin: 8px 0 0 0; font-size:11px;color:#7c7c7c;">
+                <strong>OFFICE ADDRESS:</strong> 310 COMMERCE DRIVE, EXTON, PA 19341
+              </p>
+            </td>
+
+            <!-- Logos -->
+            <td>
+              <!-- Upper logo -->
+              <div style="position: relative; left: -5px; margin-top: 5px;">
+                <img src="https://i.imgur.com/tQe3lpm.png" width="265" height="70" style="margin-bottom: 5px;" />
+              </div>
+
+              <!-- Lower logo -->
+              <div style="position: relative; left: 35px; margin-top: 10px;">
+                <img src="https://sample.rankgaze.com/wp-content/uploads/NEWlogojasonvalveman.png" width="198" height="16" />
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td><img src="https://sample.rankgaze.com/wp-content/uploads/hzjas.png" width="715" height="2" /></td>
+    </tr>
+  </table>
+</body>
+</html>
