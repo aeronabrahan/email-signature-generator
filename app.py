@@ -1,66 +1,56 @@
 import streamlit as st
 from PIL import Image, ImageDraw
 from streamlit_cropper import st_cropper
-import base64
 import io
 from jinja2 import Template
+import os
+import base64
 
-def load_instructions():
-    try:
-        with open("INSTRUCTIONS.txt", "r", encoding="utf-8") as f:
-            return f.read()
-    except FileNotFoundError:
-        return "❗INSTRUCTIONS.txt not found."
+# Set wide layout
+st.set_page_config(page_title="Email Signature Generator", layout="wide")
 
 # Load selected template
 def load_template(option):
-    if option == "Welsford":
-        file = "templates/welsford_signature.html"
-    elif option == "Valveman":
-        file = "templates/valveman_signature.html"
-    else:  # "Both"
-        file = "templates/both_signature.html"
+    file = {
+        "Welsford": "templates/welsford_signature.html",
+        "Valveman": "templates/valveman_signature.html",
+        "Both": "templates/both_signature.html"
+    }[option]
     with open(file, "r", encoding="utf-8") as f:
         return f.read()
-
-# Convert image to base64
-def encode_image(img: Image.Image):
-    buffered = io.BytesIO()
-    img.save(buffered, format="PNG")
-    return "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode()
 
 # Format number to tel:+ format
 def format_tel(number):
     return "+{}".format("".join(filter(str.isdigit, number)))
 
+# Convert and compress image to base64
+def encode_image(img: Image.Image):
+    resized = img.resize((96, 96))
+    rgb_img = resized.convert("RGB")
+    buffered = io.BytesIO()
+    rgb_img.save(buffered, format="JPEG", quality=70)
+    return "data:image/jpeg;base64," + base64.b64encode(buffered.getvalue()).decode()
+
 # Title
-st.title("📧 Email Signature Generator")
+st.title("\U0001F4E7 Email Signature Generator")
 
-# Show Instructions
-with st.expander("📘 How to Use This Tool (Instructions)", expanded=False):
-    st.markdown(load_instructions())
-
-# Step 1: Upload photo first
-if "image_uploaded" not in st.session_state:
-    st.session_state.image_uploaded = None
-
+# Step 1: Upload photo
+st.subheader("\U0001F5BC️ Step 1: Upload and Crop Profile Photo")
+if "uploaded_file" not in st.session_state:
+    st.session_state.uploaded_file = None
 uploaded_file = st.file_uploader("Upload Profile Photo", type=["png", "jpg", "jpeg"])
-
 if uploaded_file:
-    st.session_state.image_uploaded = uploaded_file
+    st.session_state.uploaded_file = uploaded_file
 
 cropped_img = None
 encoded_image = None
-
-if st.session_state.image_uploaded:
-    st.subheader("🖼️ Crop & Zoom (Optional)")
-    image = Image.open(st.session_state.image_uploaded).convert("RGBA")
+if st.session_state.uploaded_file:
+    image = Image.open(st.session_state.uploaded_file).convert("RGBA")
+    cropped_img = st_cropper(image, box_color='blue', aspect_ratio=(1, 1))
 
     # Fill transparent background with white
-    background = Image.new("RGBA", image.size, (255, 255, 255, 255))
-    image = Image.alpha_composite(background, image)
-
-    cropped_img = st_cropper(image, box_color='blue', aspect_ratio=(1, 1))
+    background = Image.new("RGBA", cropped_img.size, (255, 255, 255, 255))
+    cropped_img = Image.alpha_composite(background, cropped_img)
 
     # Make it circular
     mask = Image.new("L", cropped_img.size, 0)
@@ -69,32 +59,27 @@ if st.session_state.image_uploaded:
     cropped_img.putalpha(mask)
 
     encoded_image = encode_image(cropped_img)
+    st.image(cropped_img, caption="Cropped Image Preview", width=120)
 
-# Step 2: User Form
-st.subheader("✍️ Signature Details")
-
+# Step 2: Signature form
+st.subheader("\u270D\ufe0f Step 2: Signature Details")
 with st.form("signature_form"):
     signature_type = st.selectbox("Choose Signature Type", ["Welsford", "Valveman", "Both"])
-
     first_name = st.text_input("First Name", value="")
     last_name = st.text_input("Last Name", value="")
     title = st.text_input("Job Title", value="")
-
     phone_display = st.text_input("Personal Phone Number", value="610-420-0888")
     office_display = st.text_input("Office Phone Number", value="888-825-8800")
-
     website_choice = st.radio("Websites to show", ["Both", "Welsford only", "Valveman only"])
-
     submit = st.form_submit_button("Generate Signature")
 
-# Step 3: Generate HTML
+# Step 3: Render signature
 if submit and encoded_image:
     template_str = load_template(signature_type)
     template = Template(template_str)
 
     phone_link = format_tel(phone_display)
     office_link = format_tel(office_display)
-
     show_personal = bool(phone_display.strip())
     show_office = bool(office_display.strip())
 
@@ -113,19 +98,10 @@ if submit and encoded_image:
         show_valveman=(website_choice in ["Both", "Valveman only"]),
     )
 
-    st.subheader("🔎 Preview")
-    st.components.v1.html(html_output, height=450, scrolling=True)
+    st.subheader("\U0001F50E Preview")
+    st.components.v1.html(html_output, height=500, scrolling=True)
 
-    # Download filename
-    if signature_type == "Welsford":
-        filename = f"welsford_{first_name.lower()}_{last_name.lower()}_signature.html"
-    elif signature_type == "Valveman":
-        filename = f"valveman_{first_name.lower()}_{last_name.lower()}_signature.html"
-    else:
-        filename = f"{first_name.lower()}_{last_name.lower()}_signature.html"
-
-    b64 = base64.b64encode(html_output.encode()).decode()
-    href = f'<a href="data:text/html;base64,{b64}" download="{filename}">📥 Download Signature HTML</a>'
-    st.markdown(href, unsafe_allow_html=True)
-elif submit and not encoded_image:
-    st.error("⚠️ Please upload and crop a profile photo before generating the signature.")
+    filename = f"{signature_type.lower()}_{first_name.lower()}_{last_name.lower()}_signature.html"
+    st.download_button("\U0001F4E5 Download Signature HTML", html_output, file_name=filename, mime="text/html")
+elif submit:
+    st.error("\u26A0\ufe0f Please upload and crop a profile photo before generating the signature.")
