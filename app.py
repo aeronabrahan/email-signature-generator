@@ -24,12 +24,23 @@ def format_tel(number):
     return "+{}".format("".join(filter(str.isdigit, number)))
 
 # Convert and compress image to base64
+# def encode_image(img: Image.Image):
+#     resized = img.resize((96, 96))
+#     rgb_img = resized.convert("RGB")
+#     buffered = io.BytesIO()
+#     rgb_img.save(buffered, format="JPEG", quality=70)
+#     return "data:image/jpeg;base64," + base64.b64encode(buffered.getvalue()).decode()
+
 def encode_image(img: Image.Image):
-    resized = img.resize((96, 96))
-    rgb_img = resized.convert("RGB")
     buffered = io.BytesIO()
-    rgb_img.save(buffered, format="JPEG", quality=70)
-    return "data:image/jpeg;base64," + base64.b64encode(buffered.getvalue()).decode()
+    img.convert("RGBA").save(buffered, format="PNG")  # No resize, no compression
+    return "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode()
+
+# def encode_image(img: Image.Image):
+#     resized = img.resize((150, 150))  # Slight downscale if needed
+#     buffered = io.BytesIO()
+#     resized.save(buffered, format="PNG")  # Use PNG for lossless quality
+#     return "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode()
 
 # Title
 st.title("\U0001F4E7 Email Signature Generator")
