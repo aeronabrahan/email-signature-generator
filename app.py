@@ -1,10 +1,10 @@
+import os
+import io
+import base64
 import streamlit as st
+from jinja2 import Template
 from PIL import Image, ImageDraw
 from streamlit_cropper import st_cropper
-import io
-from jinja2 import Template
-import os
-import base64
 
 # Set wide layout
 st.set_page_config(page_title="Email Signature Generator", layout="wide")
@@ -24,23 +24,21 @@ def format_tel(number):
     return "+{}".format("".join(filter(str.isdigit, number)))
 
 # Convert and compress image to base64
+
 # def encode_image(img: Image.Image):
-#     resized = img.resize((96, 96))
-#     rgb_img = resized.convert("RGB")
 #     buffered = io.BytesIO()
-#     rgb_img.save(buffered, format="JPEG", quality=70)
-#     return "data:image/jpeg;base64," + base64.b64encode(buffered.getvalue()).decode()
+#     img.convert("RGBA").save(buffered, format="PNG")  # No resize, no compression
+#     return "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode()
 
 def encode_image(img: Image.Image):
     buffered = io.BytesIO()
-    img.convert("RGBA").save(buffered, format="PNG")  # No resize, no compression
-    return "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode()
+    img.convert("RGBA").save(buffered, format="PNG")
 
-# def encode_image(img: Image.Image):
-#     resized = img.resize((150, 150))  # Slight downscale if needed
-#     buffered = io.BytesIO()
-#     resized.save(buffered, format="PNG")  # Use PNG for lossless quality
-#     return "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode()
+    image_data = buffered.getvalue()
+    if len(image_data) > 2 * 1024 * 1024:  # 2MB limit
+        return None
+
+    return "data:image/png;base64," + base64.b64encode(image_data).decode()
 
 # Title
 st.title("\U0001F4E7 Email Signature Generator")
@@ -55,6 +53,24 @@ if uploaded_file:
 
 cropped_img = None
 encoded_image = None
+
+# if st.session_state.uploaded_file:
+#     image = Image.open(st.session_state.uploaded_file).convert("RGBA")
+#     cropped_img = st_cropper(image, box_color='blue', aspect_ratio=(1, 1))
+
+#     # Fill transparent background with white
+#     background = Image.new("RGBA", cropped_img.size, (255, 255, 255, 255))
+#     cropped_img = Image.alpha_composite(background, cropped_img)
+
+#     # Make it circular
+#     mask = Image.new("L", cropped_img.size, 0)
+#     draw = ImageDraw.Draw(mask)
+#     draw.ellipse((0, 0, cropped_img.size[0], cropped_img.size[1]), fill=255)
+#     cropped_img.putalpha(mask)
+
+#     encoded_image = encode_image(cropped_img)
+#     st.image(cropped_img, caption="Cropped Image Preview", width=120)
+
 if st.session_state.uploaded_file:
     image = Image.open(st.session_state.uploaded_file).convert("RGBA")
     cropped_img = st_cropper(image, box_color='blue', aspect_ratio=(1, 1))
@@ -70,7 +86,11 @@ if st.session_state.uploaded_file:
     cropped_img.putalpha(mask)
 
     encoded_image = encode_image(cropped_img)
-    st.image(cropped_img, caption="Cropped Image Preview", width=120)
+
+    if encoded_image:
+        st.image(cropped_img, caption="Cropped Image Preview", width=120)
+    else:
+        st.error("The final image exceeds the 2MB limit. Please crop or upload a smaller image.")
 
 # Step 2: Signature form
 st.subheader("\u270D\ufe0f Step 2: Signature Details")
