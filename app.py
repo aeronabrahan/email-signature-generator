@@ -94,6 +94,8 @@ if st.session_state.uploaded_file:
 
 # Step 2: Signature form
 st.subheader("\u270D\ufe0f Step 2: Signature Details")
+include_photo = st.checkbox("Include Profile Photo", value=True)
+
 with st.form("signature_form"):
     signature_type = st.selectbox("Choose Signature Type", ["Welsford", "Valveman", "Both"])
     first_name = st.text_input("First Name", value="")
@@ -118,7 +120,8 @@ if submit and encoded_image:
         first_name=first_name,
         last_name=last_name,
         title=title,
-        photo_url=encoded_image,
+        # photo_url=encoded_image,
+        photo_url=encoded_image if include_photo else "",
         phone_display=phone_display,
         phone_link=phone_link,
         office_display=office_display,
