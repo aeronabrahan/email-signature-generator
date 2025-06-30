@@ -110,7 +110,7 @@ if st.session_state.uploaded_file:
 
 # Step 2: Signature form
 st.subheader("\u270D\ufe0f Step 2: Signature Details")
-include_photo = st.checkbox("Include Profile Photo", value=True)
+# include_photo = st.checkbox("Include Profile Photo", value=True)
 
 with st.form("signature_form"):
     signature_type = st.selectbox("Choose Signature Type", ["Welsford", "Valveman", "Both"])
