@@ -30,31 +30,22 @@ def format_tel(number):
 #     img.convert("RGBA").save(buffered, format="PNG")  # No resize, no compression
 #     return "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode()
 
-def encode_image(img: Image.Image):
-    buffered = io.BytesIO()
-    img.convert("RGBA").save(buffered, format="PNG")
-
-    image_data = buffered.getvalue()
-    if len(image_data) > 2 * 1024 * 1024:  # 2MB limit
-        return None
-
-    return "data:image/png;base64," + base64.b64encode(image_data).decode()
-
 # def encode_image(img: Image.Image):
-#     # Resize to smaller square (e.g., 96x96 or 80x80)
-#     resized = img.resize((96, 96))
-    
-#     # Convert to JPEG for much smaller size
-#     rgb_img = resized.convert("RGB")
 #     buffered = io.BytesIO()
-#     rgb_img.save(buffered, format="JPEG", quality=70)  # Lower quality if needed
+#     img.convert("RGBA").save(buffered, format="PNG")
 
 #     image_data = buffered.getvalue()
-#     # Optional: limit size check
-#     if len(image_data) > 100 * 1024:  # 100 KB limit
+#     if len(image_data) > 2 * 1024 * 1024:  # 2MB limit
 #         return None
 
-#     return "data:image/jpeg;base64," + base64.b64encode(image_data).decode()
+#     return "data:image/png;base64," + base64.b64encode(image_data).decode()
+
+def encode_image(img: Image.Image):
+    resized = img.resize((96, 96))
+    rgb_img = resized.convert("RGB")
+    buffered = io.BytesIO()
+    rgb_img.save(buffered, format="JPEG", quality=90)
+    return "data:image/jpeg;base64," + base64.b64encode(buffered.getvalue()).decode()
 
 # Title
 st.title("\U0001F4E7 Email Signature Generator")
