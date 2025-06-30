@@ -25,20 +25,20 @@ def format_tel(number):
 
 # Convert and compress image to base64
 
-def encode_image(img: Image.Image):
-    buffered = io.BytesIO()
-    img.convert("RGBA").save(buffered, format="PNG")  # No resize, no compression
-    return "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode()
-
 # def encode_image(img: Image.Image):
 #     buffered = io.BytesIO()
-#     img.convert("RGBA").save(buffered, format="PNG")
+#     img.convert("RGBA").save(buffered, format="PNG")  # No resize, no compression
+#     return "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode()
 
-#     image_data = buffered.getvalue()
-#     if len(image_data) > 2 * 1024 * 1024:  # 2MB limit
-#         return None
+def encode_image(img: Image.Image):
+    buffered = io.BytesIO()
+    img.convert("RGBA").save(buffered, format="PNG")
 
-#     return "data:image/png;base64," + base64.b64encode(image_data).decode()
+    image_data = buffered.getvalue()
+    if len(image_data) > 2 * 1024 * 1024:  # 2MB limit
+        return None
+
+    return "data:image/png;base64," + base64.b64encode(image_data).decode()
 
 # def encode_image(img: Image.Image):
 #     # Resize to smaller square (e.g., 96x96 or 80x80)
