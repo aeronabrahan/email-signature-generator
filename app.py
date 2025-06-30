@@ -41,10 +41,10 @@ def format_tel(number):
 #     return "data:image/png;base64," + base64.b64encode(image_data).decode()
 
 def encode_image(img: Image.Image):
-    resized = img.resize((96, 96))
+    resized = img.resize((150, 150))
     rgb_img = resized.convert("RGB")
     buffered = io.BytesIO()
-    rgb_img.save(buffered, format="JPEG", quality=90)
+    rgb_img.save(buffered, format="JPEG", quality=110)
     return "data:image/jpeg;base64," + base64.b64encode(buffered.getvalue()).decode()
 
 # Title
